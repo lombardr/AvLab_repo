@@ -1,5 +1,9 @@
+#include <fstream>
+
 void calibration(){
   const int N=5;
+  
+  ofstream out("fit_results.txt");
 
   gStyle->SetTitleSize(0.04,"XY");
   
@@ -23,13 +27,19 @@ void calibration(){
   g6->SetMarkerColor(1);
   
   TF1 *f6=new TF1("f6","pol1",800,2800);
-  g6->Fit(f6);
+  TFitResultPtr fitres=g6->Fit(f6,"S");
   g6->Draw("AP");
   
   float res_6[N]={0};
   float res_6s[N]={0};
   float m=f6->GetParameter(1), q=f6->GetParameter(0),
   	ms=f6->GetParError(1), qs=f6->GetParError(0);
+  	
+  out<<"***ch6***"<<endl;
+  out<<"\t m: "<<m<<" \\pm "<<ms<<endl;
+  out<<"\t q: "<<q<<" \\pm "<<qs<<endl;
+  out<<"\t chisq: "<<fitres->MinFcnValue()<<"/"<<fitres->Ndf()<<endl;
+  	
   for(int i=0; i<N; i++){
     res_6[i]=keV[i]-f6->Eval(cent_6[i]);
     res_6s[i]=sqrt(pow(m*res_6s[i],2)+pow(cent_6[i]*ms,2)+pow(qs,2));
@@ -49,13 +59,20 @@ void calibration(){
   g3->SetMarkerColor(1);
   
   TF1 *f3=new TF1("f3","pol1",800,2800);
-  g3->Fit(f3);
+  fitres=g3->Fit(f3,"S");
   g3->Draw("AP");
   
   float res_3[N]={0};
   float res_3s[N]={0};
         m=f3->GetParameter(1); q=f3->GetParameter(0);
   	ms=f3->GetParError(1); qs=f3->GetParError(0);
+
+  out<<"***ch3***"<<endl;
+  out<<"\t m: "<<m<<" \\pm "<<ms<<endl;
+  out<<"\t q: "<<q<<" \\pm "<<qs<<endl;
+  out<<"\t chisq: "<<fitres->MinFcnValue()<<"/"<<fitres->Ndf()<<endl;
+
+  	
   for(int i=0; i<N; i++){
     res_3[i]=keV[i]-f3->Eval(cent_3[i]);
     res_3s[i]=sqrt(pow(m*res_3s[i],2)+pow(cent_3[i]*ms,2)+pow(qs,2));
