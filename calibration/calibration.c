@@ -6,6 +6,7 @@ void calibration(){
   ofstream out("fit_results.txt");
 
   gStyle->SetTitleSize(0.04,"XY");
+  gStyle->SetOptFit(111);
   
   float keV[N]={661, 1173, 1332, 511, 1275};
   
@@ -29,6 +30,14 @@ void calibration(){
   TF1 *f6=new TF1("f6","pol1",800,2800);
   TFitResultPtr fitres=g6->Fit(f6,"S");
   g6->Draw("AP");
+  gPad->Update();
+  
+  TPaveStats *st6 = (TPaveStats*)g6->FindObject("stats");
+  st6->SetX1NDC(0.62);
+  st6->SetX2NDC(0.87);
+  st6->SetY1NDC(0.15);
+  st6->SetY2NDC(0.35);
+  gPad->Modified();
   
   float res_6[N]={0};
   float res_6s[N]={0};
@@ -65,6 +74,14 @@ void calibration(){
   TF1 *f3=new TF1("f3","pol1",800,2800);
   fitres=g3->Fit(f3,"S");
   g3->Draw("AP");
+  gPad->Update();
+  
+  TPaveStats *st3 = (TPaveStats*)g3->FindObject("stats");
+  st3->SetX1NDC(0.62);
+  st3->SetX2NDC(0.87);
+  st3->SetY1NDC(0.15);
+  st3->SetY2NDC(0.35);
+  gPad->Modified();
   
   float res_3[N]={0};
   float res_3s[N]={0};

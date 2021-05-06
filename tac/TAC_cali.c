@@ -42,6 +42,13 @@ void TAC_cali(){
   g->SetTitle("TAC; Channel [-]; Time [ns]");
   g->Draw("AP");
   
+  gStyle->SetOptFit(1111);
+  TPaveStats *st = (TPaveStats*)g->FindObject("stats");
+  st->SetX1NDC(0.62);
+  st->SetX2NDC(0.87);
+  st->SetY1NDC(0.15);
+  st->SetY2NDC(0.35);
+  
   TGraphErrors *gr=new TGraphErrors(N,cent,res,NULL,res_s);
   gr->SetMarkerStyle(3);
   gr->SetTitle("Residues TAC; Channel [-]; Time [ns]");
@@ -51,6 +58,9 @@ void TAC_cali(){
   TF1 *ref=new TF1("ref","0",0,10000);
   ref->SetLineColor(2);
   ref->Draw("same");
+  
+ 
+
  
 
 
