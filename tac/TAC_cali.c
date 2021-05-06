@@ -13,6 +13,8 @@ void TAC_cali(){
   float cent[N]={1506,1601,3392,3296,2496,9127,8312,6132,6058,6461};
   float ns[N]={28,30,62.5+3.5,60.5+3.5,44.5+3.5,170.5+4+3.5,154.5+4+3.5,114.5+3.5,113.5+3.5,121.5+3.5};
   
+  
+  // +0 1 caen, +3.5 2 caen, +4 bobina cavo extra
   /* 110.5 ns
   1st: 6132 (+4)
   2nd: 6058 (+3)
@@ -22,7 +24,7 @@ void TAC_cali(){
   */
   
   TGraph *g=new TGraph(N,cent,ns);
-  TCanvas *c=new TCanvas;
+  TCanvas *c=new TCanvas("c","calibration");
   
   TF1 *f=new TF1("f","pol1",0,10000);
   f->SetParNames("q","m");
@@ -53,7 +55,7 @@ void TAC_cali(){
   TGraphErrors *gr=new TGraphErrors(N,cent,res,NULL,res_s);
   gr->SetMarkerStyle(3);
   gr->SetTitle("Residues TAC; Channel [-]; Time [ns]");
-  TCanvas *cs=new TCanvas;
+  TCanvas *cs=new TCanvas("cs","residues");
   gr->Draw("AP");
   
   TF1 *ref=new TF1("ref","0",0,10000);
