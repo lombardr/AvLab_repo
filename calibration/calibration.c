@@ -28,6 +28,7 @@ void calibration(){
   g6->SetMarkerColor(1);
   
   TF1 *f6=new TF1("f6","pol1",800,2800);
+  f6->SetParNames("q","m");
   TFitResultPtr fitres=g6->Fit(f6,"S");
   g6->Draw("AP");
   gPad->Update();
@@ -72,6 +73,7 @@ void calibration(){
   g3->SetMarkerColor(1);
   
   TF1 *f3=new TF1("f3","pol1",800,2800);
+  f3->SetParNames("q","m");
   fitres=g3->Fit(f3,"S");
   g3->Draw("AP");
   gPad->Update();

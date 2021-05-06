@@ -25,6 +25,7 @@ void TAC_cali(){
   TCanvas *c=new TCanvas;
   
   TF1 *f=new TF1("f","pol1",0,10000);
+  f->SetParNames("q","m");
   TFitResultPtr fitres=g->Fit(f,"S");
   
   float m=f->GetParameter(1), q=f->GetParameter(0),
